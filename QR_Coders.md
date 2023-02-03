@@ -120,10 +120,10 @@ Add a few screenshots for parts of the project completed till now to give the vi
 
 You'll have to link the screenshots from your drive folder here.
 
-![image]((https://drive.google.com/file/d/1JkhLtxs1qtm5jooGMzURVL0VqKm50lPL/view?usp=sharing) This is the index page with all the PG Rooms listed)
-![image]((https://drive.google.com/file/d/17zBJAJHWCJhS3x8KyBV_s-uRITUlYaxc/view?usp=sharing) This is the page of a PG Room)
-![image]((https://drive.google.com/file/d/1Wdr50mgKsk5mN6aEZlGQm6Q2O3RldhVX/view?usp=sharing) This is the login page)
-![image]((https://drive.google.com/file/d/1r7qNGeBMA4D2c5TYiv5ROi0Laufes5uD/view?usp=sharing) This is the page to add new PG Room)
+![image]((https://drive.google.com/uc?export=view&id=1JkhLtxs1qtm5jooGMzURVL0VqKm50lPL) This is the index page with all the PG Rooms listed)
+![image]((https://drive.google.com/uc?export=view&id=17zBJAJHWCJhS3x8KyBV_s-uRITUlYaxc) This is the page of a PG Room)
+![image]((https://drive.google.com/uc?export=1Wdr50mgKsk5mN6aEZlGQm6Q2O3RldhVX) This is the login page)
+![image]((https://drive.google.com/uc?export=1r7qNGeBMA4D2c5TYiv5ROi0Laufes5uD) This is the page to add new PG Room)
 
 
 Use this template as a guide for writing your documentation. Feel free to customize and adapt it for you project.  
