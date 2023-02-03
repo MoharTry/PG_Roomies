@@ -120,10 +120,7 @@ Add a few screenshots for parts of the project completed till now to give the vi
 
 You'll have to link the screenshots from your drive folder here.
 
-![Screenshot alt text](https://drive.google.com/file/d/17zBJAJHWCJhS3x8KyBV_s-uRITUlYaxc/view?usp=share_link) This is the page of a PG Room )
-![Screenshot alt text]((https://drive.google.com/file/d/1JkhLtxs1qtm5jooGMzURVL0VqKm50lPL/view?usp=share_link) This is the index page which displays all the listed PG Rooms )
-![Screenshot alt text]((https://drive.google.com/file/d/1r7qNGeBMA4D2c5TYiv5ROi0Laufes5uD/view?usp=share_link) This is the page to add a new PG Room )
-![Screenshot alt text]((https://drive.google.com/file/d/1r7qNGeBMA4D2c5TYiv5ROi0Laufes5uD/view?usp=share_link) This is the login page )
+![Screenshot alt text](https://i.redd.it/qp8ocyzvyj8a1.jpg "Here is a screenshot")
 
 Use this template as a guide for writing your documentation. Feel free to customize and adapt it for you project.  
 For more Markdown syntax help, visit [here](https://www.markdownguide.org/basic-syntax/)
