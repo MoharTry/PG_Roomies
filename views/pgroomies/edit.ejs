@@ -1,0 +1,84 @@
+<%layout('layouts/boilerplate')%>
+    <div class="row">
+        <h1 class="text-center">Edit PG Rooms</h1>
+        <div class="col-md-6 offset-md-3">
+            <form action="/pgroomies/<%= pg.id%>?_method=PUT" method="POST" novalidate class="validation"
+                enctype="multipart/form-data">
+                <div class="mb -3">
+                    <label class="form-label" for="title">Title</label>
+                    <input class="form-control" type="text" id="title" name="pgroomies[title]" value="<%=pg.title%>"
+                        required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please give a title
+                    </div>
+                </div>
+                <div class="mb -3">
+                    <label class="form-label" for="location">Location</label>
+                    <input class="form-control" type="text" id="location" name="pgroomies[location]"
+                        value="<%=pg.location%>" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please give a location
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="formFileMultiple" class="form-label">Upload Images</label>
+                    <input class="form-control" type="file" id="formFileMultiple" name="image" multiple required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        This page would look much good better with images.
+                    </div>
+                </div>
+                <div class="mb -3">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea class="form-control" type="text" id="description" name="pgroomies[description]"
+                        required><%=pg.description%></textarea>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please give a description
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="price">Price</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="price-label">₹</span>
+                        <input type="text" class="form-control" id="price" aria-label="price"
+                            aria-describedby="price-label" name="pgroomies[price]" value="<%=pg.price%>" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please give a price
+                        </div>
+                    </div>
+                </div>
+                <h5> Delete Images </h5>
+                <div class="row row-cols-1 row-cols-md-4 g-4 mb-3">
+                    <%pg.images.forEach((image, i) => { %>
+                        <div class="col">
+                            <div class="card">
+                                <img class="card-img" src="<%= image.url%>">
+                                <div class="card-img-overlay text-end pt-1 pe-2">
+                                    <label class="visually-hidden" for="image-<%= i %>">Delete Image</label>
+                                    <input class="form-check-input" type="checkbox" name="deleteImages[]"value="<%= image.filename %>" id="image-<%= i %>">
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+                <div class="mb-3 mt-3">
+                    <button class="btn btn-success">Update PG Room</button>
+                </div>
+            </form>
+            <a href="/pgroomies">All PG Rooms</a>
+        </div>
+    </div>
