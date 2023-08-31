@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const mongoose = require("mongoose");
 const cities = require("./cities");
 const { places, descriptors } = require("./seedHelpers");
@@ -15,30 +17,23 @@ mongoose
     console.log(err);
   });
 
-const getRandomImage = async () => {
+async function getRandomImage() {
   const response = await axios.get(
-    "https://api.unsplash.com/photos/random?client_id=UNSPLASH_ID"
+    "https://api.unsplash.com/photos/random?query=camping&client_id=UNSPLASH_SECRET_KEY"
   );
-  return response.data.urls.regular;
-};
-
-// async function getRandomImage() {
-//   const response = await axios.get(
-//     "https://api.unsplash.com/photos/random?client_id=UNSPLASH_ID"
-//   );
-//   return response.data.urls.regular;
-// }
+  return response.data.urls.regular; // This will give the URL of the regular-sized image
+}
 
 const sample = (array) => array[Math.floor(Math.random() * array.length)];
 
 const seedDB = async () => {
   await pgroomies.deleteMany({});
-  for (let i = 0; i < 50; i++) {
-    const random1093 = Math.floor(Math.random() * 1093);
-    const price = Math.floor(Math.random() * 999) + 10;
+  for (let i = 0; i < 5; i++) {
+    const random1000 = Math.floor(Math.random() * 1000);
+    const price = Math.floor(Math.random() * 20) + 10;
     const pg = new pgroomies({
-      author: "642bbe2eba463c2e6a80e401",
-      location: `${cities[random1093].city}, ${cities[random1093].state}`,
+      author: "UNSPLASH_ID",
+      location: `${cities[random1000].city}, ${cities[random1000].state}`,
       title: `${sample(descriptors)} ${sample(places)}`,
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam sint nesciunt praesentium illum porro, magni dignissimos consectetur, tempora obcaecati illo eius doloribus voluptatem maxime numquam tenetur est velit libero quibusdam?",
@@ -46,25 +41,20 @@ const seedDB = async () => {
       geometry: {
         type: "Point",
         coordinates: [
-          cities[random1093].longitude,
-          cities[random1093].latitude,
+          cities[random1000].longitude,
+          cities[random1000].latitude,
         ],
       },
-      images: await getRandomImage(),
-      // images: [
-      //   {
-      //     url: "https://res.cloudinary.com/dllgmqo7k/image/upload/v1675595971/PG_Roomies/hvyugzudud0jz6c8q7hz.jpg",
-      //     filename: "PG_Roomies/hvyugzudud0jz6c8q7hz",
-      //   },
-      //   {
-      //     url: "https://res.cloudinary.com/dllgmqo7k/image/upload/v1675595971/PG_Roomies/xfrphmk8usu2m2gkguyp.webp",
-      //     filename: "PG_Roomies/xfrphmk8usu2m2gkguyp",
-      //   },
-      //   {
-      //     url: "https://res.cloudinary.com/dllgmqo7k/image/upload/v1675595971/PG_Roomies/d7v1sp6dw1cwd4989qvv.jpg",
-      //     filename: "PG_Roomies/d7v1sp6dw1cwd4989qvv",
-      //   },
-      // ],
+      images: [
+        {
+          url: await getRandomImage(),
+          filename: "pgroomies/ahfnenvca4tha00h2ubt",
+        },
+        {
+          url: await getRandomImage(),
+          filename: "pgroomies/ruyoaxgf72nzpi4y6cdi",
+        },
+      ],
     });
     await pg.save();
   }
