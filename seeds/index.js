@@ -19,7 +19,7 @@ mongoose
 
 async function getRandomImage() {
   const response = await axios.get(
-    "https://api.unsplash.com/photos/random?query=camping&client_id=UNSPLASH_SECRET_KEY"
+    "https://api.unsplash.com/photos/random?query=camping&client_id=UNSPLASH_ACCESS_KEY"
   );
   return response.data.urls.regular; // This will give the URL of the regular-sized image
 }
