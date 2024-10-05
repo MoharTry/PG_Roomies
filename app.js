@@ -41,7 +41,7 @@ mongoose
     console.log(err);
   });
 
-mongoose.set('strictQuery', false);
+mongoose.set("strictQuery", false);
 const app = express();
 
 app.engine("ejs", ejsMate);
@@ -109,6 +109,7 @@ const styleSrcUrls = [
   "https://fonts.googleapis.com/",
   "https://use.fontawesome.com/",
   "https://cdn.maptiler.com/",
+  "https://cdn.jsdelivr.net",
 ];
 const connectSrcUrls = [
   // "https://api.mapbox.com/",
