@@ -1,7 +1,9 @@
 const Pgroomies = require("../models/pgroomies");
-const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
-const mapBoxToken = process.env.MAPBOX_TOKEN;
-const geocoder = mbxGeocoding({ accessToken: mapBoxToken });
+// const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+// const mapBoxToken = process.env.MAPBOX_TOKEN;
+// const geocoder = mbxGeocoding({ accessToken: mapBoxToken });
+const maptilerClient = require("@maptiler/client");
+maptilerClient.config.apiKey = process.env.MAPTILER_API_KEY;
 const { clouidnary } = require("../cloudinary");
 const pgroomies = require("../models/pgroomies");
 
@@ -15,14 +17,20 @@ module.exports.renderNewForm = (req, res) => {
 };
 
 module.exports.createPgroomies = async (req, res, next) => {
-  const geoData = await geocoder
-    .forwardGeocode({
-      query: req.body.pgroomies.location,
-      limit: 1,
-    })
-    .send();
-  const pgroomies = new Pgroomies(req.body.pgroomies);
-  pgroomies.geometry = geoData.body.features[0].geometry;
+  // const geoData = await geocoder
+  //   .forwardGeocode({
+  //     query: req.body.campground.location,
+  //     limit: 1,
+  //   })
+  //   .send();
+  // const campground = new Campground(req.body.campground);
+  // campground.geometry = geoData.body.features[0].geometry;
+  const geoData = await maptilerClient.geocoding.forward(
+    req.body.campground.location,
+    { limit: 1 }
+  );
+  const campground = new Campground(req.body.campground);
+  campground.geometry = geoData.features[0].geometry;
   pgroomies.images = req.files.map((f) => ({
     url: f.path,
     filename: f.filename,
@@ -64,9 +72,14 @@ module.exports.renderEditForm = async (req, res) => {
 module.exports.updatePgroomies = async (req, res) => {
   const { id } = req.params;
   console.log(req.body);
-  const pgroomies = await Pgroomies.findByIdAndUpdate(id, {
-    ...req.body.pgroomiesEdit,
-  });
+  // const pgroomies = await Pgroomies.findByIdAndUpdate(id, {
+  //   ...req.body.pgroomiesEdit,
+  // });
+  const geoData = await maptilerClient.geocoding.forward(
+    req.body.campground.location,
+    { limit: 1 }
+  );
+  campground.geometry = geoData.features[0].geometry;
   const imgs = req.files.map((f) => ({ url: f.path, filename: f.filename }));
   pgroomies.images.push(...imgs);
   await pgroomies.save();
