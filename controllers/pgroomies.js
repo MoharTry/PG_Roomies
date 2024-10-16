@@ -4,7 +4,7 @@ const Pgroomies = require("../models/pgroomies");
 // const geocoder = mbxGeocoding({ accessToken: mapBoxToken });
 const maptilerClient = require("@maptiler/client");
 maptilerClient.config.apiKey = process.env.MAPTILER_API_KEY;
-const { clouidnary } = require("../cloudinary");
+const { cloudinary } = require("../cloudinary");
 const pgroomies = require("../models/pgroomies");
 
 module.exports.index = async (req, res) => {
@@ -29,17 +29,19 @@ module.exports.createPgroomies = async (req, res, next) => {
     req.body.campground.location,
     { limit: 1 }
   );
-  const campground = new Campground(req.body.campground);
-  campground.geometry = geoData.features[0].geometry;
-  pgroomies.images = req.files.map((f) => ({
+  const newPgRoom = new Pgroomies(req.body.pgroomies);
+  newPgRoom.geometry = geoData.features[0].geometry;
+  newPgRoom.images = req.files.map((f) => ({
     url: f.path,
     filename: f.filename,
   }));
-  pgroomies.author = req.user._id;
-  await pgroomies.save();
-  console.log(pgroomies.images);
+  // pgroomies.author = req.user._id;
+  // await pgroomies.save();
+  // console.log(pgroomies.images);
+  newPgRoom.author = req.user._id;
+  await newPgRoom.save();
   req.flash("success", "Successfully created a new PG room site !");
-  res.redirect(`/pgroomies/${pgroomies.id}`);
+  res.redirect(`/pgroomies/${newPgRoom.id}`);
 };
 
 module.exports.showPgroomies = async (req, res) => {
@@ -75,17 +77,23 @@ module.exports.updatePgroomies = async (req, res) => {
   // const pgroomies = await Pgroomies.findByIdAndUpdate(id, {
   //   ...req.body.pgroomiesEdit,
   // });
-  const geoData = await maptilerClient.geocoding.forward(
-    req.body.campground.location,
-    { limit: 1 }
-  );
-  campground.geometry = geoData.features[0].geometry;
+  // const geoData = await maptilerClient.geocoding.forward(
+  //   req.body.campground.location,
+  //   { limit: 1 }
+  // );
+  // campground.geometry = geoData.features[0].geometry;
+  const pgroomies = await Pgroomies.findByIdAndUpdate(id, {
+    ...req.body.pgroomies,
+  });
+
+  const geoData = await maptilerClient.geocoding.forward(req.body.pgroomies.location, { limit: 1 });
+  pgroomies.geometry = geoData.features[0].geometry;
   const imgs = req.files.map((f) => ({ url: f.path, filename: f.filename }));
   pgroomies.images.push(...imgs);
   await pgroomies.save();
   if (req.body.deleteImages) {
     for (let filename of req.body.deleteImages) {
-      await clouidnary.uploader.destroy(filename);
+      await cloudinary.uploader.destroy(filename);
     }
     await pgroomies.updateOne({
       $pull: { images: { filename: { $in: req.body.deleteImages } } },
