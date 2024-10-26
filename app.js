@@ -31,7 +31,7 @@ const { options } = require("joi");
 const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017/pgroomies";
 
 mongoose
-  .connect(dbUrl, {
+  .connect('mongodb+srv://mohartry:bdoUcbODAFIsqZbA@cluster0.jax6e.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

@@ -1,14 +1,14 @@
-require("dotenv").config();
+require('dotenv').config();
 
 const mongoose = require("mongoose");
 const cities = require("./cities");
 const { places, descriptors } = require("./seedHelpers");
 const pgroomies = require("../models/pgroomies");
-const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017/pgroomies";
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/pgroomies';
 const axios = require("axios");
 
 mongoose
-  .connect(dbUrl)
+  .connect('mongodb+srv://mohartry:bdoUcbODAFIsqZbA@cluster0.jax6e.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
   .then(() => {
     console.log("MONGO CONNECTION OPEN!!!");
   })
@@ -17,11 +17,27 @@ mongoose
     console.log(err);
   });
 
+
 async function getRandomImage() {
-  const response = await axios.get(
-    "https://api.unsplash.com/search/photos?query=camping&client_id=UNSPLASH_ACCESS_KEY"
-  );
-  return response.data.urls.regular; //  URL of the regular-sized image
+  try {
+    const response = await axios.get(
+      "https://api.unsplash.com/photos/random?query=housing&client_id=qnaYmrJqkdY9-FT-xlDHPUEHHy7u_B2c_Uw-q4CiTXw"
+    );
+
+    // Check if we got results
+    // if (response.data.results && response.data.results.length > 0) {
+    //   // Get the first result and return the regular image URL
+    //   const image = response.data.results[0];
+    //   return image.urls.regular;
+    // } else {
+    //   throw new Error('No images found');
+    // }
+    const imageUrl = response.data.urls.regular;
+    return imageUrl;
+  } catch (error) {
+    console.error('Error fetching image from Unsplash:', error.message);
+    throw error;
+  }
 }
 
 // const randomIndex = Math.floor(Math.random() * cities.length);
@@ -30,7 +46,7 @@ const sample = (array) => array[Math.floor(Math.random() * array.length)];
 
 const seedDB = async () => {
   await pgroomies.deleteMany({});
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 20; i++) {
     const randomIndex = Math.floor(Math.random() * cities.length);
     const selectedCity = cities[randomIndex];
 
@@ -41,7 +57,7 @@ const seedDB = async () => {
 
     const price = Math.floor(Math.random() * 20) + 10;
     const pg = new pgroomies({
-      author: "UNSPLASH_ID",
+      author: '6711360d7361c495cf8c7b10',
       location: `${selectedCity.city}, ${selectedCity.state}`,
       title: `${sample(descriptors)} ${sample(places)}`,
       description:

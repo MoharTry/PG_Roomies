@@ -26,7 +26,7 @@ module.exports.createPgroomies = async (req, res, next) => {
   // const campground = new Campground(req.body.campground);
   // campground.geometry = geoData.body.features[0].geometry;
   const geoData = await maptilerClient.geocoding.forward(
-    req.body.campground.location,
+    req.body.pgroomies.location,
     { limit: 1 }
   );
   const newPgRoom = new Pgroomies(req.body.pgroomies);
