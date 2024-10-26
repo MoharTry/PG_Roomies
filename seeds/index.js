@@ -8,7 +8,7 @@ const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/pgroomies';
 const axios = require("axios");
 
 mongoose
-  .connect('mongodb+srv://mohartry:bdoUcbODAFIsqZbA@cluster0.jax6e.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+  .connect(dbUrl)
   .then(() => {
     console.log("MONGO CONNECTION OPEN!!!");
   })
@@ -21,7 +21,7 @@ mongoose
 async function getRandomImage() {
   try {
     const response = await axios.get(
-      "https://api.unsplash.com/photos/random?query=housing&client_id=qnaYmrJqkdY9-FT-xlDHPUEHHy7u_B2c_Uw-q4CiTXw"
+      "https://api.unsplash.com/photos/random?query=housing&client_id=UNSPLASH_ACCESS_KEY"
     );
 
     // Check if we got results
